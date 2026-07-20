@@ -6,7 +6,7 @@ import ProjectManager from '../views/ProjectManager.vue'
 
 /** 应用页面路由：项目数据通过参数在后续阶段传递。 */
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     { path: '/', name: 'home', component: Home },
     { path: '/projects', name: 'projects', component: ProjectManager },
