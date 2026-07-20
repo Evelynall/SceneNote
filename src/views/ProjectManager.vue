@@ -53,8 +53,8 @@ async function openProject(projectId: string): Promise<void> {
   await router.push({ name: 'watch', params: { projectId } })
 }
 
-/** 向上滑动：返回上次观看的项目（观看页面在项目管理下方，所以向上滑动是进入）。 */
-async function handleSwipeUp(): Promise<void> {
+/** 向右滑动：返回上次观看的项目（观看页面在项目管理右侧）。 */
+async function handleSwipeRight(): Promise<void> {
   const lastId = projectStore.lastProjectId
 
   if (!lastId) {
@@ -153,7 +153,7 @@ function formatDate(timestamp: number): string {
 </script>
 
 <template>
-  <SwipeGesture @swipe-up="handleSwipeUp">
+  <SwipeGesture @swipe-right="handleSwipeRight">
     <main class="page">
       <section class="header">
         <p class="eyebrow">SceneNote</p>

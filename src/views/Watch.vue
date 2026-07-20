@@ -28,14 +28,14 @@ async function loadProject(): Promise<void> {
   }
 }
 
-/** 向上滑动：跳转到时间轴页面（时间轴在观看页面下方，所以向上滑动是返回）。 */
-async function handleSwipeUp(): Promise<void> {
+/** 向左滑动：跳转到时间轴页面（时间轴在观看页面右侧）。 */
+async function handleSwipeLeft(): Promise<void> {
   projectStore.setNavigationDirection('forward')
   await router.push({ name: 'timeline', params: { projectId: projectId.value } })
 }
 
-/** 向下滑动：跳转到项目管理页面（项目管理在观看页面上方，所以向下滑动是进入）。 */
-async function handleSwipeDown(): Promise<void> {
+/** 向右滑动：跳转到项目管理页面（项目管理在观看页面左侧）。 */
+async function handleSwipeRight(): Promise<void> {
   projectStore.saveLastProjectId()
   projectStore.setNavigationDirection('backward')
   await router.push({ name: 'projects' })
@@ -51,17 +51,17 @@ watch(projectId, () => {
 </script>
 
 <template>
-  <SwipeGesture @swipe-up="handleSwipeUp" @swipe-down="handleSwipeDown">
+  <SwipeGesture @swipe-left="handleSwipeLeft" @swipe-right="handleSwipeRight">
     <main class="page">
       <p v-if="isLoading" class="status">正在载入项目…</p>
       <template v-else-if="projectStore.currentProject">
         <div class="header-row">
         <ProjectHeader :project="projectStore.currentProject" @update:title="projectStore.updateProjectTitle" />
-        <button type="button" class="back-to-projects" @click="handleSwipeDown">项目列表</button>
+        <button type="button" class="back-to-projects" @click="handleSwipeRight">项目列表</button>
       </div>
       <Timer />
       <MarkerButton />
-      <button type="button" class="timeline-link" @click="handleSwipeUp">
+      <button type="button" class="timeline-link" @click="handleSwipeLeft">
         查看时间轴（{{ projectStore.currentProject.markers.length }}）
       </button>
       </template>

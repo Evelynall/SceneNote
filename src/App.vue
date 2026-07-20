@@ -7,7 +7,7 @@ const route = useRoute()
 const projectStore = useProjectStore()
 
 const transitionName = computed(() => {
-  return projectStore.navigationDirection === 'forward' ? 'page-up' : 'page-down'
+  return projectStore.navigationDirection === 'forward' ? 'page-left' : 'page-right'
 })
 </script>
 
@@ -20,33 +20,33 @@ const transitionName = computed(() => {
 </template>
 
 <style>
-.page-up-enter-active,
-.page-up-leave-active {
+.page-left-enter-active,
+.page-left-leave-active {
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-.page-up-enter-from {
+.page-left-enter-from {
   opacity: 0;
-  transform: translateY(100%);
+  transform: translateX(100%);
 }
 
-.page-up-leave-to {
+.page-left-leave-to {
   opacity: 0;
-  transform: translateY(-100%);
+  transform: translateX(-100%);
 }
 
-.page-down-enter-active,
-.page-down-leave-active {
+.page-right-enter-active,
+.page-right-leave-active {
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-.page-down-enter-from {
+.page-right-enter-from {
   opacity: 0;
-  transform: translateY(-100%);
+  transform: translateX(-100%);
 }
 
-.page-down-leave-to {
+.page-right-leave-to {
   opacity: 0;
-  transform: translateY(100%);
+  transform: translateX(100%);
 }
 </style>

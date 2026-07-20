@@ -12,24 +12,24 @@ const props = withDefaults(defineProps<SwipeGestureProps>(), {
 })
 
 const emit = defineEmits<{
-  (e: 'swipe-up'): void
-  (e: 'swipe-down'): void
+  (e: 'swipe-left'): void
+  (e: 'swipe-right'): void
   (e: 'swipe-start'): void
   (e: 'swipe-end'): void
 }>()
 
 const isSwiping = ref(false)
-const startY = ref(0)
 const startX = ref(0)
-const currentY = ref(0)
+const startY = ref(0)
+const currentX = ref(0)
 const containerRef = ref<HTMLElement | null>(null)
 let touchStartTarget: EventTarget | null = null
 
 function handleTouchStart(event: TouchEvent): void {
   const touch = event.touches[0]
-  startY.value = touch.clientY
   startX.value = touch.clientX
-  currentY.value = touch.clientY
+  startY.value = touch.clientY
+  currentX.value = touch.clientX
   isSwiping.value = true
   touchStartTarget = event.target
   emit('swipe-start')
@@ -39,11 +39,11 @@ function handleTouchMove(event: TouchEvent): void {
   if (!isSwiping.value) return
 
   const touch = event.touches[0]
-  currentY.value = touch.clientY
+  currentX.value = touch.clientX
 
-  const deltaX = Math.abs(touch.clientX - startX.value)
+  const deltaY = Math.abs(touch.clientY - startY.value)
 
-  if (deltaX > props.cancelThreshold) {
+  if (deltaY > props.cancelThreshold) {
     isSwiping.value = false
     emit('swipe-end')
   }
@@ -52,17 +52,15 @@ function handleTouchMove(event: TouchEvent): void {
 function handleTouchEnd(event: TouchEvent): void {
   if (!isSwiping.value) return
 
-  const deltaY = currentY.value - startY.value
+  const deltaX = currentX.value - startX.value
 
-  if (Math.abs(deltaY) > props.threshold) {
-    if (deltaY < 0) {
-      emit('swipe-up')
+  if (Math.abs(deltaX) > props.threshold) {
+    if (deltaX < 0) {
+      emit('swipe-left')
     } else {
-      emit('swipe-down')
+      emit('swipe-right')
     }
-    // 阻止合成 click 事件，避免影响新页面交互
     event.preventDefault()
-    // 主动失焦触摸起始元素，清除 :active/:focus 状态，防止残留影响新页面
     if (touchStartTarget instanceof HTMLElement) {
       touchStartTarget.blur()
     }
@@ -74,7 +72,6 @@ function handleTouchEnd(event: TouchEvent): void {
 }
 
 onMounted(() => {
-  // 等待过渡动画完成（250ms）后再聚焦，确保焦点真正落到新页面
   void nextTick(() => {
     window.setTimeout(() => {
       containerRef.value?.focus()
@@ -101,8 +98,7 @@ onMounted(() => {
   position: relative;
   width: 100%;
   height: 100%;
-  /* 使用 manipulation 减少移动端点击延迟，避免 pan-x 导致滑动后浏览器卡在让出垂直控制的状态 */
-  touch-action: manipulation;
+  touch-action: pan-y;
   outline: none;
 }
 </style>
