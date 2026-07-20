@@ -60,7 +60,9 @@ function handleTouchEnd(event: TouchEvent): void {
     } else {
       emit('swipe-right')
     }
-    event.preventDefault()
+    if (event.cancelable) {
+      event.preventDefault()
+    }
     if (touchStartTarget instanceof HTMLElement) {
       touchStartTarget.blur()
     }

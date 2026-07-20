@@ -42,8 +42,8 @@ async function loadProject(): Promise<void> {
   }
 }
 
-/** 向左滑动：返回观看页面（观看页面在时间轴左侧）。 */
-async function handleSwipeLeft(): Promise<void> {
+/** 向右滑动：返回观看页面（观看页面在时间轴左侧）。 */
+async function handleSwipeRight(): Promise<void> {
   projectStore.setNavigationDirection('backward')
   await router.push({ name: 'watch', params: { projectId: projectId.value } })
 }
@@ -156,13 +156,13 @@ watch(projectId, () => {
 </script>
 
 <template>
-  <SwipeGesture @swipe-left="handleSwipeLeft">
+  <SwipeGesture @swipe-right="handleSwipeRight">
     <main class="page">
       <p v-if="isLoading" class="status">正在载入时间轴…</p>
       <template v-else-if="projectStore.currentProject">
         <div class="heading">
         <ProjectHeader :project="projectStore.currentProject" eyebrow="项目时间轴" @update:title="projectStore.updateProjectTitle" />
-        <button type="button" class="back-link" @click="handleSwipeLeft">返回观看</button>
+        <button type="button" class="back-link" @click="handleSwipeRight">返回观看</button>
       </div>
 
         <div class="project-actions" aria-label="项目数据操作">
