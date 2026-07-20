@@ -219,7 +219,7 @@ function formatDate(timestamp: number): string {
 <style scoped>
 .page {
   display: grid;
-  min-height: 100vh;
+  min-height: 100dvh;
   padding: calc(32px + env(safe-area-inset-top)) 24px calc(32px + env(safe-area-inset-bottom));
   gap: 32px;
 }

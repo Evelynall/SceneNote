@@ -73,7 +73,7 @@ watch(projectId, () => {
 .page {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100dvh;
   padding: calc(32px + env(safe-area-inset-top)) 24px calc(32px + env(safe-area-inset-bottom));
   gap: 28px;
 }

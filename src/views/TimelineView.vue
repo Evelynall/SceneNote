@@ -215,7 +215,7 @@ watch(projectId, () => {
 <style scoped>
 .page {
   display: grid;
-  min-height: 100vh;
+  min-height: 100dvh;
   padding: calc(28px + env(safe-area-inset-top)) 24px calc(32px + env(safe-area-inset-bottom));
   align-content: start;
   gap: 24px;

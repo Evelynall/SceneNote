@@ -12,9 +12,10 @@
 
 body {
   min-width: 320px;
-  min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
   background: #080808;
+  overflow: hidden;
 }
 
 button,
@@ -28,5 +29,6 @@ button {
 }
 
 #app {
-  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-y: auto;
 }
