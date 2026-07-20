@@ -4,6 +4,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/SceneNote/',
   plugins: [
     vue(),
     VitePWA({
@@ -17,11 +18,11 @@ export default defineConfig({
         theme_color: '#080808',
         background_color: '#080808',
         display: 'standalone',
-        start_url: '/',
-        scope: '/',
+        start_url: '/SceneNote/',
+        scope: '/SceneNote/',
         icons: [
           {
-            src: '/icon.svg',
+            src: '/SceneNote/icon.svg',
             sizes: 'any',
             type: 'image/svg+xml',
             purpose: 'any maskable',
