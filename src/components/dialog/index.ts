@@ -1,0 +1,1 @@
+export { openDialog, confirm } from './dialog'
