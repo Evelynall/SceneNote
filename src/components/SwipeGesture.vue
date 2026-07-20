@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, onMounted, onUnmounted, ref } from 'vue'
+import { nextTick, onMounted, ref } from 'vue'
 
 interface SwipeGestureProps {
   threshold?: number
@@ -42,12 +42,6 @@ function handleTouchMove(event: TouchEvent): void {
   currentY.value = touch.clientY
 
   const deltaX = Math.abs(touch.clientX - startX.value)
-  const deltaY = Math.abs(touch.clientY - startY.value)
-
-  // 当垂直滑动明显大于水平滑动时，阻止浏览器默认行为（如下拉刷新）
-  if (deltaY > deltaX && deltaY > 10) {
-    event.preventDefault()
-  }
 
   if (deltaX > props.cancelThreshold) {
     isSwiping.value = false
@@ -80,25 +74,12 @@ function handleTouchEnd(event: TouchEvent): void {
 }
 
 onMounted(() => {
-  const el = containerRef.value
-  if (!el) return
-
-  // 使用非 passive 监听器，以便可以调用 preventDefault 阻止下拉刷新
-  el.addEventListener('touchmove', handleTouchMove, { passive: false })
-
   // 等待过渡动画完成（250ms）后再聚焦，确保焦点真正落到新页面
   void nextTick(() => {
     window.setTimeout(() => {
-      el.focus()
+      containerRef.value?.focus()
     }, 280)
   })
-})
-
-onUnmounted(() => {
-  const el = containerRef.value
-  if (el) {
-    el.removeEventListener('touchmove', handleTouchMove)
-  }
 })
 </script>
 
@@ -108,6 +89,7 @@ onUnmounted(() => {
     class="swipe-gesture"
     tabindex="-1"
     @touchstart="handleTouchStart"
+    @touchmove="handleTouchMove"
     @touchend="handleTouchEnd"
   >
     <slot />
@@ -119,8 +101,8 @@ onUnmounted(() => {
   position: relative;
   width: 100%;
   height: 100%;
-  /* 禁用浏览器默认触摸行为，防止下拉刷新等干扰滑动导航 */
-  touch-action: none;
+  /* 使用 manipulation 减少移动端点击延迟，避免 pan-x 导致滑动后浏览器卡在让出垂直控制的状态 */
+  touch-action: manipulation;
   outline: none;
 }
 </style>

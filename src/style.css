@@ -10,17 +10,11 @@
   box-sizing: border-box;
 }
 
-html,
-body {
-  overscroll-behavior-y: none;
-}
-
 body {
   min-width: 320px;
-  min-height: 100dvh;
+  min-height: 100vh;
   margin: 0;
   background: #080808;
-  overflow: hidden;
 }
 
 button,
@@ -34,6 +28,5 @@ button {
 }
 
 #app {
-  min-height: 100dvh;
-  overflow-y: auto;
+  min-height: 100vh;
 }

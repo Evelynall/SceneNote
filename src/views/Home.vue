@@ -59,7 +59,7 @@ async function startWatching(): Promise<void> {
 <style scoped>
 .page {
   display: grid;
-  min-height: 100dvh;
+  min-height: 100vh;
   padding: 32px 24px calc(32px + env(safe-area-inset-bottom));
   align-content: space-between;
   gap: 48px;
